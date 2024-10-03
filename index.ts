@@ -58,7 +58,52 @@ server.get('/events/:filename', (req: any,rep: any) => {
   const filename = req.params.filename
   rep.sendFile(`/events/${filename}`)
 })
-cron.schedule("30 6 * * *", function(){
+
+
+// test
+import cors from 'cors';
+
+// Configure CORS
+const corsOptions = {
+    origin: 'https://p2base.vercel.app', // Your frontend domain
+    credentials: true, // Allow credentials
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'], // Allowed methods
+    allowedHeaders: [
+        'X-CSRF-Token',
+        'X-Requested-With',
+        'Accept',
+        'Accept-Version',
+        'Content-Length',
+        'Content-MD5',
+        'Content-Type',
+        'Date',
+        'X-Api-Version',
+    ],
+};
+
+// Use CORS middleware
+exports.server.use(cors(corsOptions));
+
+// Handle preflight requests
+exports.server.options('*', cors());
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+cron.schedule("30 6 * * *", function(){import { options } from 'superagent';
+
   getData();
   console.log('________________________');
 });

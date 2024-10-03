@@ -87,6 +87,7 @@
   },
   "devDependencies": {
     "@types/adm-zip": "^0.5.0",
+    "@types/cors": "^2.8.17",
     "@types/fastify-jwt": "^0.8.1",
     "@types/mongoose": "^5.11.97",
     "@types/node": "^17.0.23",

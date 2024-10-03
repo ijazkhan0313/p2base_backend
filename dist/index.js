@@ -41,41 +41,6 @@ exports.server.register(require('@fastify/static'), {
 
 
 
-// test
-const app = express();
-
-// Configure CORS
-const corsOptions = {
-    origin: 'https://p2base.vercel.app', // Your frontend domain
-    credentials: true, // Allow credentials
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'], // Allowed methods
-    allowedHeaders: [
-        'X-CSRF-Token',
-        'X-Requested-With',
-        'Accept',
-        'Accept-Version',
-        'Content-Length',
-        'Content-MD5',
-        'Content-Type',
-        'Date',
-        'X-Api-Version',
-    ],
-};
-
-// Use CORS middleware
-app.use(cors(corsOptions));
-
-// Handle preflight requests
-app.options('*', cors());
-
-// Your routes
-app.post('/p2base/login', (req, res) => {
-    // Handle login logic here
-    res.send('Login successful'); // Example response
-});
-
-
-
 //TODO Add getting satic img to controllers
 exports.server.get('/events/:filename', (req, rep) => {
     const filename = req.params.filename;
