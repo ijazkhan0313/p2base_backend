@@ -65,6 +65,7 @@
     "adm-zip": "^0.5.9",
     "bcrypt": "^5.0.1",
     "concurrently": "^7.1.0",
+    "cors": "^2.8.5",
     "date-and-time": "^2.4.1",
     "dotenv": "^16.0.0",
     "fastify": "^4.0.0-rc.5",

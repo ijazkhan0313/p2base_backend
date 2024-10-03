@@ -34,6 +34,35 @@ exports.server.register(require('@fastify/static'), {
     root: path_1.default.join(__dirname, 'uploads'),
     prefix: '/uploads/', // optional: default '/'
 });
+
+
+
+// test
+import cors from 'cors';
+import { options } from 'superagent';
+
+const app = express();
+
+app.use(cors({
+    origin: 'https://p2base.vercel.app',
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+    allowedHeaders: [
+        'X-CSRF-Token', 
+        'X-Requested-With', 
+        'Accept', 
+        'Accept-Version', 
+        'Content-Length', 
+        'Content-MD5', 
+        'Content-Type', 
+        'Date', 
+        'X-Api-Version'
+    ]
+}));
+
+app.options('*', cors()); // Enable preflight for all routes
+
+
 //TODO Add getting satic img to controllers
 exports.server.get('/events/:filename', (req, rep) => {
     const filename = req.params.filename;
