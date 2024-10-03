@@ -1,8 +1,8 @@
 node_modules
 # .DS.Store
 # .P2BAWSKEY.cer
-*.zip
-private_key
+# *.zip
+# private_key
 # .logs.txt
 # datatourismeEvents
 # datatourismeSites
@@ -20,7 +20,7 @@ private_key
 # .activities.json
 # .hiking.json
 # .products.json
-data/*
+# data/*
 .env
 # uploads
 # data/sites.json
