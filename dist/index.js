@@ -13,12 +13,16 @@ const fastify_multer_1 = __importDefault(require("fastify-multer"));
 const node_cron_1 = __importDefault(require("node-cron"));
 const path_1 = __importDefault(require("path"));
 const data_filter_1 = require("./src/services/data.filter");
+const { send } = require( "process" );
+const { options, post } = require( "superagent" );
 dotenv_1.default.config({ path: __dirname + '/.env' });
 exports.server = (0, fastify_1.default)({ logger: true,
     bodyLimit: 100 * 1024 * 1024 });
 (0, database_service_1.databaseConnexion)();
 exports.server.register(jwt_1.default, { secret: process.env.JWT_SECRET });
 exports.server.register(fastify_multer_1.default.contentParser);
+
+
 exports.server.register(require('@fastify/cors'), (instance) => {
     return (req, callback) => {
         const corsOptions = {
@@ -38,29 +42,38 @@ exports.server.register(require('@fastify/static'), {
 
 
 // test
-import cors from 'cors';
-import { options } from 'superagent';
-
 const app = express();
 
-app.use(cors({
-    origin: 'https://p2base.vercel.app',
-    credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+// Configure CORS
+const corsOptions = {
+    origin: 'https://p2base.vercel.app', // Your frontend domain
+    credentials: true, // Allow credentials
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'], // Allowed methods
     allowedHeaders: [
-        'X-CSRF-Token', 
-        'X-Requested-With', 
-        'Accept', 
-        'Accept-Version', 
-        'Content-Length', 
-        'Content-MD5', 
-        'Content-Type', 
-        'Date', 
-        'X-Api-Version'
-    ]
-}));
+        'X-CSRF-Token',
+        'X-Requested-With',
+        'Accept',
+        'Accept-Version',
+        'Content-Length',
+        'Content-MD5',
+        'Content-Type',
+        'Date',
+        'X-Api-Version',
+    ],
+};
 
-app.options('*', cors()); // Enable preflight for all routes
+// Use CORS middleware
+app.use(cors(corsOptions));
+
+// Handle preflight requests
+app.options('*', cors());
+
+// Your routes
+app.post('/p2base/login', (req, res) => {
+    // Handle login logic here
+    res.send('Login successful'); // Example response
+});
+
 
 
 //TODO Add getting satic img to controllers
