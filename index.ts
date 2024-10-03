@@ -16,6 +16,8 @@ export const server = fastify({logger:true,
 databaseConnexion();
 server.register(fastifyJwt, {secret: process.env.JWT_SECRET! });
 server.register(multer.contentParser);
+
+
 server.register(require('@fastify/cors'), (instance) => {
   return (req: any,callback : any)  => {
     const corsOptions = {
@@ -27,6 +29,26 @@ server.register(require('@fastify/cors'), (instance) => {
     callback(null, corsOptions)
   }
 })
+
+
+exports.server.register(require('@fastify/cors'), {
+  origin: (origin : any, cb: any) => {
+      // Allow your frontend origin (adjust as necessary)
+      if (origin === 'https://p2base.vercel.app' || !origin) {
+          cb(null, true);
+      } else {
+          cb(new Error('Not allowed by CORS'));
+      }
+  },
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Origin', 'X-Requested-With', 'Content', 'Accept', 'Content-Type', 'Authorization'],
+  preflightContinue: false,  // Let the browser handle OPTIONS
+  optionsSuccessStatus: 204, // Handle the OPTIONS response
+});
+
+
+
+
 server.register(require('@fastify/static'), {
   root: path.join(__dirname, 'uploads'),
   prefix: '/uploads/', // optional: default '/'
