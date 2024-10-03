@@ -13,39 +13,23 @@ const fastify_multer_1 = __importDefault(require("fastify-multer"));
 const node_cron_1 = __importDefault(require("node-cron"));
 const path_1 = __importDefault(require("path"));
 const data_filter_1 = require("./src/services/data.filter");
-const { join } = require( "path" );
-const { server } = require( "." );
 dotenv_1.default.config({ path: __dirname + '/.env' });
 exports.server = (0, fastify_1.default)({ logger: true,
     bodyLimit: 100 * 1024 * 1024 });
 (0, database_service_1.databaseConnexion)();
 exports.server.register(jwt_1.default, { secret: process.env.JWT_SECRET });
 exports.server.register(fastify_multer_1.default.contentParser);
-
-
-
-// exports.server.register(require('@fastify/cors'), (instance) => {
-//     return (req, callback) => {
-//         const corsOptions = {
-//             // This is NOT recommended for production as it enables reflection exploits
-//             origin: "*",
-//             methods: ['GET, POST, PUT, DELETE, PATCH, OPTIONS'],
-//             allowedHeaders: ['Origin, X-Requested-With, Content, Accept, Content-Type, Authorization']
-//         };
-//         callback(null, corsOptions);
-//     };
-// });
-
-exports.server.register(require('@fastify/static'), {
-    root: path_1.default.join(__dirname, 'uploads'),
-    prefix: '/uploads/', // optional: default '/'
-    cors: {
-        origin: '*',  // You can specify allowed origins here if needed
-    },
+exports.server.register(require('@fastify/cors'), (instance) => {
+    return (req, callback) => {
+        const corsOptions = {
+            // This is NOT recommended for production as it enables reflection exploits
+            origin: "*",
+            methods: ['GET, POST, PUT, DELETE, PATCH, OPTIONS'],
+            allowedHeaders: ['Origin, X-Requested-With, Content, Accept, Content-Type, Authorization']
+        };
+        callback(null, corsOptions);
+    };
 });
-
-
-
 exports.server.register(require('@fastify/static'), {
     root: path_1.default.join(__dirname, 'uploads'),
     prefix: '/uploads/', // optional: default '/'
