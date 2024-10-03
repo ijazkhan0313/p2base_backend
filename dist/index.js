@@ -13,6 +13,7 @@ const fastify_multer_1 = __importDefault(require("fastify-multer"));
 const node_cron_1 = __importDefault(require("node-cron"));
 const path_1 = __importDefault(require("path"));
 const data_filter_1 = require("./src/services/data.filter");
+const { join } = require( "path" );
 const { server } = require( "." );
 dotenv_1.default.config({ path: __dirname + '/.env' });
 exports.server = (0, fastify_1.default)({ logger: true,
@@ -35,19 +36,12 @@ exports.server.register(fastify_multer_1.default.contentParser);
 //     };
 // });
 
-exports.server.register(require('@fastify/cors'), {
-    origin: (origin, cb) => {
-        // Allow your frontend origin (adjust as necessary)
-        if (origin === 'https://p2base.vercel.app' || !origin) {
-            cb(null, true);
-        } else {
-            cb(new Error('Not allowed by CORS'));
-        }
+exports.server.register(require('@fastify/static'), {
+    root: path_1.default.join(__dirname, 'uploads'),
+    prefix: '/uploads/', // optional: default '/'
+    cors: {
+        origin: '*',  // You can specify allowed origins here if needed
     },
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-    allowedHeaders: ['Origin', 'X-Requested-With', 'Content', 'Accept', 'Content-Type', 'Authorization'],
-    preflightContinue: false,  // Let the browser handle OPTIONS
-    optionsSuccessStatus: 204, // Handle the OPTIONS response
 });
 
 
