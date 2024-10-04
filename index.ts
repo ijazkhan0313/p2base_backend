@@ -31,6 +31,19 @@ server.register(require('@fastify/static'), {
   root: path.join(__dirname, 'uploads'),
   prefix: '/uploads/', // optional: default '/'
 })
+
+
+server.register.use((req:any, res:any, next:any) => {
+  res.set({
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "*",
+      "Access-Control-Allow-Headers": "'Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token'",
+  });
+
+  next();
+});
+
+
 //TODO Add getting satic img to controllers
 server.get('/events/:filename', (req: any,rep: any) => {
   const filename = req.params.filename
